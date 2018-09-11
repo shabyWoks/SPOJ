@@ -61,28 +61,35 @@ class Solution{
             return ret;
         }
     }
-    
-    static int[][] arr;
-    static int[][] rev;
+
+    static ArrayList<ArrayList<Data>> arr;
+    static ArrayList<ArrayList<Data>> rev;
     public static void main(String []argh) throws Exception{
         Reader br = new Reader();
         int t= br.nextInt();
         for(int aa=0; aa<t; aa++){
             int p= br.nextInt();
             int q= br.nextInt();
-            arr = new int[p+1][p+1];
-            rev = new int[p+1][p+1];
+            arr = new ArrayList<>();
+            rev = new ArrayList<>();
+            for(int qq=0; qq<p; qq++){
+                arr.add(new ArrayList<Data>());
+                rev.add(new ArrayList<Data>());
+            }
             for(int qq= 1; qq<=q; qq++){
                 int o= br.nextInt();
                 int d= br.nextInt();
                 int pp= br.nextInt();
-                arr[o][d]= pp;
-                rev[d][o]= pp;
+                Data d1 = new Data(d-1, pp);
+                Data d2 = new Data(o-1, pp);
+                arr.get(o-1).add(d1);
+                rev.get(d-1).add(d2);
             }
+            
             int[] data= dijkstra(arr, p);
             int[] data1= dijkstra(rev, p);
             int sum =0;
-            for(int i=2; i<=p; i++){
+            for(int i=1; i<p; i++){
                 sum += data[i] + data1[i];
             }
             System.out.println(sum);
@@ -93,24 +100,23 @@ class Solution{
     static int[] currPath;
     static int[] distMap;
     static int[] visited;
-    private static int[] dijkstra(int[][] arr, int p) {
-        currPath = new int[p+1];
-        distMap = new int[p+1];
-        visited = new int[p+1];
+    private static int[] dijkstra(ArrayList<ArrayList<Data>> arr, int p) {
+        currPath = new int[p];
+        distMap = new int[p];
+        visited = new int[p];
         integerPQ = new PriorityQueue<>();
-        for(int zz=1; zz<=p; zz++) distMap[zz]= Integer.MAX_VALUE;
-        integerPQ.add(new Data(1, 0));
+        for(int zz=0; zz<p; zz++) distMap[zz]= Integer.MAX_VALUE;
+        integerPQ.add(new Data(0, 0));
         while(integerPQ.peek() != null) {
             Data dd= integerPQ.poll();
             if(distMap[dd.ind] > dd.cost) {
                 distMap[dd.ind] = dd.cost;
-                for(int kk= 1; kk<=p; kk++) {
-                    if(arr[dd.ind][kk] != 0) {
-                        int totalPrice= arr[dd.ind][kk] + dd.cost;
-                        if(distMap[kk] > totalPrice && visited[kk] == 0) {
-                            integerPQ.add(new Data(kk, totalPrice));
-                        }    
-                    }
+                ArrayList<Data> ddd= arr.get(dd.ind);
+                for(int kk= 0; kk<ddd.size(); kk++) {
+                    int totalPrice= ddd.get(kk).cost + dd.cost;
+                    if(distMap[ddd.get(kk).ind] > totalPrice && visited[ddd.get(kk).ind] == 0) {
+                        integerPQ.add(new Data(ddd.get(kk).ind, totalPrice));
+                    }    
                 }  
                 visited[dd.ind] = 1;
             }
