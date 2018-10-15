@@ -79,37 +79,26 @@ class  Solution{
     }
     
     static HashMap<Integer, Integer> parent;
-    // static HashMap<Integer, Integer> degree;
     static int[] M;
     
     public static void main(String[] argh) throws Exception{
-        // BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
         Reader br= new Reader();
         int t= br.nextInt();
-        // int t= Integer.parseInt(br.readLine().trim());
         StringBuilder sb= new StringBuilder();
         for(int tt=0; tt<t; tt++){
-            // String[] inp1= br.readLine().trim().split(" ");
-            // int n= Integer.parseInt(inp1[0]);
-            // int m= Integer.parseInt(inp1[1]);
             int n= br.nextInt();
             int m= br.nextInt();
             M= new int[n];
-            // String[] inpM= br.readLine().trim().split(" ");
             for(int i=0; i<n; i++){
-                // M[i]= Integer.parseInt(inpM[i]);
                 M[i]= br.nextInt();
             }
             ArrayList<ROAD> roads= new ArrayList<>();
             for(int i=0; i<m; i++){
-                // String[] inp2= br.readLine().trim().split(" ");
-                // roads.add(new ROAD(Integer.parseInt(inp2[0]) - 1, Integer.parseInt(inp2[1]) - 1, Integer.parseInt(inp2[2])));
                 roads.add(new ROAD(br.nextInt() - 1, br.nextInt() - 1, br.nextInt()));
             }
             Collections.sort(roads);
             
             parent= new HashMap<>();
-            // degree= new HashMap<>();
             long sum= 0;
             for(int i=0; i<m; i++){
                 ROAD r= roads.get(i);
@@ -135,7 +124,6 @@ class  Solution{
     private static int findParent(int pos){
         if(!parent.containsKey(pos)){
             parent.put(pos, pos);
-            // degree.put(pos, 1);
             return pos;
         }
         if(parent.get(pos) == pos){
@@ -166,16 +154,12 @@ class  Solution{
         int parent1= findParent(pos1);
         int parent2= findParent(pos2);
         
-        // int a1= degree.get(parent1);
-        // int a2= degree.get(parent2);
         if(parent1 != parent2){
             if(M[parent1] == 1){
                 parent.put(parent2, parent1);
-                // degree.put(parent1, a1+a2);
             }
             else{
                 parent.put(parent1, parent2);
-                // degree.put(parent2, a1+a2);
             }
         }
     }
