@@ -100,7 +100,6 @@ class  Solution{
     static int C;
     static HashMap<Integer, Integer> map;
     public static void main(String[] argh) throws Exception{
-        // BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
         Reader br= new Reader();
         C= br.nextInt();
         int N= br.nextInt();
@@ -131,7 +130,6 @@ class  Solution{
     }
     
     private static int lis(ArrayList<CARD> cards){
-        // int[] lis= new int[len];
         ArrayList<CARD> list= new ArrayList<>();
         int len= cards.size();
         int lisLen= 0;
