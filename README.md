@@ -1,1 +1,1 @@
-# SPOJ-- Solutions in JAVA
+# SPOJ-- Solutions in JAVA or CPP
